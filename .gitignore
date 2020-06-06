@@ -1,3 +1,4 @@
 .yarn_cache/*
 !.yarn_cache/.gitkeep
 node_modules
+dist/app.js
