@@ -1,4 +1,4 @@
-import {Canvas} from "./WebGl/index";
+import {Canvas, Scene, ShaderProgram, Buffers} from "./WebGl/index";
 
 window.onload = (): void => {
     const canvas = Canvas.getInstance().getCanvas();
@@ -10,9 +10,27 @@ window.onload = (): void => {
             throw new Error("Unable to initialize WebGL. Your browser or machine may not support it.");
         }
 
-        // Set clear color to black, fully opaque
-        gl.clearColor(0.0, 0.0, 0.0, 1.0);
-        // Clear the color buffer with specified clear color
-        gl.clear(gl.COLOR_BUFFER_BIT);
+        Scene.clearScene(gl);
+
+        // Initialize a shader program; this is where all the lighting
+        // for the vertices and so forth is established.
+        const vsSource = ShaderProgram.createVertexShaderProgram();
+        const fsSource = ShaderProgram.createFragmentShaderProgram();
+        const shaderProgram = ShaderProgram.initShaderProgram(gl, vsSource, fsSource);
+
+        const programInfo = {
+            program: shaderProgram,
+            attribLocations: {
+                vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+            },
+            uniformLocations: {
+                projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
+                modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+            },
+        };
+
+        const buffers = Buffers.initBuffers(gl);
+
+        Scene.drawScene(gl, programInfo, buffers);
     }
 };
