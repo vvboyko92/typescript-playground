@@ -1,13 +1,14 @@
 interface IAttribLocations {
-    vertexPosition: number
+    vertexPosition: number;
+    vertexColor?: number;
 }
 
 interface IUniformLocations {
-    projectionMatrix: WebGLUniformLocation,
-    modelViewMatrix: WebGLUniformLocation,
+    projectionMatrix: WebGLUniformLocation;
+    modelViewMatrix: WebGLUniformLocation;
 }
 export default interface IProgramInfo {
-    program: WebGLProgram,
-    attribLocations: IAttribLocations,
-    uniformLocations: IUniformLocations,
+    program: WebGLProgram;
+    attribLocations: IAttribLocations;
+    uniformLocations: IUniformLocations;
 }

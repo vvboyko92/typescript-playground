@@ -22,6 +22,7 @@ window.onload = (): void => {
             program: shaderProgram,
             attribLocations: {
                 vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+                vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
             },
             uniformLocations: {
                 projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
@@ -31,6 +32,19 @@ window.onload = (): void => {
 
         const buffers = Buffers.initBuffers(gl);
 
-        Scene.drawScene(gl, programInfo, buffers);
+        let squareRotation = 0.0;
+        let then = 0;
+
+        const render = (now: number) => {
+            now *= 0.001;  // convert to seconds
+            const deltaTime = now - then;
+            then = now;
+            squareRotation += deltaTime;
+            Scene.drawScene(gl, programInfo, buffers, squareRotation);
+
+            requestAnimationFrame(render);
+        }
+
+        requestAnimationFrame(render);
     }
 };
