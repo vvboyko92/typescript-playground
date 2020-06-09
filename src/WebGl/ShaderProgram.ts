@@ -3,23 +3,32 @@ class ShaderProgram {
         // Vertex shader program
         return `
             attribute vec4 aVertexPosition;
+            attribute vec4 aVertexColor;
+
             uniform mat4 uModelViewMatrix;
             uniform mat4 uProjectionMatrix;
-            void main() {
+
+            varying lowp vec4 vColor;
+
+            void main(void) {
               gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+              vColor = aVertexColor;
             }
         `;
     }
 
     public static createFragmentShaderProgram(): string {
+        // set color RGB + Alpha
         return `
-            void main() {
-              gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+            varying lowp vec4 vColor;
+
+            void main(void) {
+              gl_FragColor = vColor;
             }
         `;
     }
 
-    public static initShaderProgram(gl: WebGLRenderingContext, vsSource: string, fsSource: string) {
+    public static initShaderProgram(gl: WebGLRenderingContext, vsSource: string, fsSource: string): WebGLProgram {
         const vertexShader = this.loadShader(gl, gl.VERTEX_SHADER, vsSource);
         const fragmentShader = this.loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
 

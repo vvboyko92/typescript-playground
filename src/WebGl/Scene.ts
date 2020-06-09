@@ -1,4 +1,4 @@
-import IPositionBuffer from "./IPositionBuffer";
+import IBuffer from "./IBuffer";
 import IProgramInfo from "./IProgramInfo";
 import { mat4 } from 'gl-matrix';
 
@@ -14,7 +14,7 @@ class Scene {
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     }
 
-    public static drawScene(gl: WebGLRenderingContext, programInfo: IProgramInfo, buffers: IPositionBuffer) {
+    public static drawScene(gl: WebGLRenderingContext, programInfo: IProgramInfo, buffers: IBuffer) {
         this.clearScene(gl);
 
         const fieldOfView = 45 * Math.PI / 180;   // in radians
@@ -60,6 +60,24 @@ class Scene {
                 offset);
             gl.enableVertexAttribArray(
                 programInfo.attribLocations.vertexPosition);
+        }
+
+        {
+            const numComponents = 4;
+            const type = gl.FLOAT;
+            const normalize = false;
+            const stride = 0;
+            const offset = 0;
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffers.color);
+            gl.vertexAttribPointer(
+                programInfo.attribLocations.vertexColor,
+                numComponents,
+                type,
+                normalize,
+                stride,
+                offset);
+            gl.enableVertexAttribArray(
+                programInfo.attribLocations.vertexColor);
         }
 
         // Tell WebGL to use our program when drawing
