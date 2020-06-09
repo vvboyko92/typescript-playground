@@ -4,7 +4,7 @@ import { mat4 } from 'gl-matrix';
 
 class Scene {
     public static clearScene(gl: WebGLRenderingContext): void {
-        gl.clearColor(0.0, 0.0, 0.0, 1.0); // Set clear color to black, fully opaque
+        gl.clearColor(1.0, 1.0, 1.0, 0.0); // Set clear color to black, fully opaque
         gl.clear(gl.COLOR_BUFFER_BIT); // Clear the color buffer with specified clear color
         gl.clearDepth(1.0); // Clear everything
         gl.enable(gl.DEPTH_TEST);  // Enable depth testing
@@ -14,7 +14,12 @@ class Scene {
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     }
 
-    public static drawScene(gl: WebGLRenderingContext, programInfo: IProgramInfo, buffers: IBuffer) {
+    public static drawScene(
+        gl: WebGLRenderingContext,
+        programInfo: IProgramInfo,
+        buffers: IBuffer,
+        squareRotation: number,
+    ) {
         this.clearScene(gl);
 
         const fieldOfView = 45 * Math.PI / 180;   // in radians
@@ -41,6 +46,11 @@ class Scene {
         mat4.translate(modelViewMatrix,     // destination matrix
             modelViewMatrix,     // matrix to translate
             [-0.0, 0.0, -6.0]);  // amount to translate
+
+        mat4.rotate(modelViewMatrix,  // destination matrix
+            modelViewMatrix,  // matrix to rotate
+            squareRotation,   // amount to rotate in radians
+            [0, 0, 1]);
 
         // Tell WebGL how to pull out the positions from the position
         // buffer into the vertexPosition attribute.
