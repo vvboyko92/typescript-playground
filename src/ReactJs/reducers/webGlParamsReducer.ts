@@ -1,8 +1,8 @@
-import {SET_SPEED} from '../actions/webGlParamAction';
+import {SET_SPEED, SET_ROTATION} from '../actions/webGlParamAction';
 
 const initialState = {
     rotation: {
-        xAxis: 1,
+        xAxis: 0,
         yAxis: 0,
         zAxis: 0
     },
@@ -24,7 +24,11 @@ const webGlParams = (state: any[], action: any) => {
         case SET_SPEED:
             return Object.assign({}, state, {
                 speed: action.text
-            })
+            });
+        case SET_ROTATION:
+            return Object.assign({}, state, {
+                rotation: action.text
+            });
         default:
             return state;
     }
