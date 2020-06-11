@@ -1,13 +1,10 @@
 import IBuffer from "./IBuffer"
+import store from "../ReactJs/store";
 
 class Buffers {
     public static initBuffers(gl: WebGLRenderingContext): IBuffer {
-        const colors = [
-            1.0,  1.0,  1.0,  1.0,    // white
-            1.0,  0.0,  0.0,  1.0,    // red
-            0.0,  1.0,  0.0,  1.0,    // green
-            0.0,  0.0,  1.0,  1.0,    // blue
-        ];
+        const webGlParams = <any>store.getState().webGlParams;
+        const colors = webGlParams.colors;
 
         const colorBuffer = gl.createBuffer();
 

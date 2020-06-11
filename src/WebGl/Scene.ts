@@ -1,10 +1,11 @@
 import IBuffer from "./IBuffer";
 import IProgramInfo from "./IProgramInfo";
 import { mat4 } from 'gl-matrix';
+import store from "../ReactJs/store";
 
 class Scene {
     public static clearScene(gl: WebGLRenderingContext): void {
-        gl.clearColor(1.0, 1.0, 1.0, 0.0); // Set clear color to black, fully opaque
+        gl.clearColor(0.0, 0.0, 0.0, 1.0); // Set clear color to black, fully opaque
         gl.clear(gl.COLOR_BUFFER_BIT); // Clear the color buffer with specified clear color
         gl.clearDepth(1.0); // Clear everything
         gl.enable(gl.DEPTH_TEST);  // Enable depth testing
@@ -50,7 +51,7 @@ class Scene {
         mat4.rotate(modelViewMatrix,  // destination matrix
             modelViewMatrix,  // matrix to rotate
             squareRotation,   // amount to rotate in radians
-            [0, 0, 1]);
+            this.getRotation());
 
         // Tell WebGL how to pull out the positions from the position
         // buffer into the vertexPosition attribute.
@@ -110,6 +111,19 @@ class Scene {
             const vertexCount = 4;
             gl.drawArrays(gl.TRIANGLE_STRIP, offset, vertexCount);
         }
+    }
+
+    private static getRotation()
+    {
+        const state = store.getState();
+        const webGlParams = <any>state.webGlParams;
+        const rotation = webGlParams.rotation;
+
+        return [
+            rotation.xAxis,
+            rotation.yAxis,
+            rotation.zAxis,
+        ]
     }
 }
 
