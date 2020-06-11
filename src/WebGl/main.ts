@@ -1,4 +1,5 @@
 import {Canvas, Scene, ShaderProgram, Buffers} from "./index";
+import store from "../ReactJs/store";
 
 const main = (): void => {
     const canvas = Canvas.getInstance().getCanvas();
@@ -36,10 +37,8 @@ const main = (): void => {
         let then = 0;
 
         const render = (now: number) => {
-            now *= 0.001;  // convert to seconds
-            const deltaTime = now - then;
-            then = now;
-            squareRotation += deltaTime;
+            const speed = store.getState().webGlParams.speed * 0.001;
+            squareRotation += speed;
             Scene.drawScene(gl, programInfo, buffers, squareRotation);
 
             requestAnimationFrame(render);

@@ -1,10 +1,9 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
-import useState from 'redux';
-// import { Redirect, Route, Switch } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSpeed } from '../actions/webGlParamAction';
 
 const useStyles = makeStyles({
     root: {
@@ -14,20 +13,20 @@ const useStyles = makeStyles({
 
 const App: React.FC = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     return (
         <div className={classes.root}>
             <Typography id="discrete-slider" gutterBottom>
-                X-axis
+                Speed
             </Typography>
             <Slider
-                defaultValue={30}
+                defaultValue={0}
                 aria-labelledby="discrete-slider"
                 valueLabelDisplay="auto"
-                step={10}
-                marks
-                min={10}
-                max={110}
+                onChange={(e, value) => { dispatch(setSpeed(value)) }}
+                min={0}
+                max={300}
             />
         </div>
     );

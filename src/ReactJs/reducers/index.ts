@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import webGlParams from './webGlParams'
+import webGlParams from './webGlParamsReducer'
 
-export default combineReducers({
+const webGlApp = combineReducers({
     webGlParams,
-})
+});
+
+export default webGlApp
