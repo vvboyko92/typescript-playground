@@ -6,7 +6,7 @@ import App from './ReactJs/App';
 import main from "./WebGl/main";
 import store from "./ReactJs/store";
 
-main();
+// main();
 
 render(
     <Provider store={store}>
