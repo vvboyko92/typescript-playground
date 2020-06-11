@@ -56,7 +56,7 @@ class Scene {
         // Tell WebGL how to pull out the positions from the position
         // buffer into the vertexPosition attribute.
         {
-            const numComponents = 2;
+            const numComponents = 3;
             const type = gl.FLOAT;
             const normalize = false;
             const stride = 0;
@@ -105,6 +105,14 @@ class Scene {
             programInfo.uniformLocations.modelViewMatrix,
             false,
             modelViewMatrix);
+
+        {
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
+            const vertexCount = 36;
+            const type = gl.UNSIGNED_SHORT;
+            const offset = 0;
+            gl.drawElements(gl.TRIANGLES, vertexCount, type, offset);
+        }
 
         {
             const offset = 0;
