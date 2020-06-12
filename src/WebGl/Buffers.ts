@@ -6,6 +6,7 @@ class Buffers {
         const webGlParams = <any>store.getState().webGlParams;
         const colors = webGlParams.colors;
 
+        console.log(colors);
         const colorBuffer = gl.createBuffer();
 
         gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
