@@ -113,12 +113,6 @@ class Scene {
             const offset = 0;
             gl.drawElements(gl.TRIANGLES, vertexCount, type, offset);
         }
-
-        {
-            const offset = 0;
-            const vertexCount = 4;
-            gl.drawArrays(gl.TRIANGLE_STRIP, offset, vertexCount);
-        }
     }
 
     private static getRotation()
